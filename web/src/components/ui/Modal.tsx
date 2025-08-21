@@ -3,6 +3,7 @@
 import { X } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
 interface ModalProps {
     isOpen: boolean
@@ -26,10 +27,13 @@ export default function Modal({ isOpen, onClose, children, title }: ModalProps) 
 
     if (!isOpen) return null
 
-    return (
-        <div className='fixed inset-0 z-50'>
+    const portalTarget = typeof document !== 'undefined' ? document.body : null
+    if (!portalTarget) return null
+
+    return createPortal(
+        <div className='fixed inset-0 z-[100]'>
             <motion.div
-                className='absolute inset-0 bg-black/10 backdrop-blur-md cursor-pointer'
+                className='absolute inset-0 bg-black/30 backdrop-blur-lg cursor-pointer'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -62,6 +66,7 @@ export default function Modal({ isOpen, onClose, children, title }: ModalProps) 
                     <div className={title ? 'p-6' : 'p-6'}>{children}</div>
                 </motion.div>
             </div>
-        </div>
+        </div>,
+        portalTarget
     )
 }
