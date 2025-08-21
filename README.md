@@ -1,4 +1,4 @@
-## FlavorAI — Minimal Quickstart
+## FlavorAI TEST TASK
 
 Prereqs: Docker, Node 18+
 
